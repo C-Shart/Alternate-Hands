@@ -28,27 +28,40 @@ print()
 # TODO: Create configuration options for word selection: word length min/max, include/exclude string, ?
 # TODO: Create configuration options for list: Length, ?
 
+
+
+
+""" for letter_index in letters:
+    if letter_index %2 == 0:
+        if this_word[letter_index] not in starting hand:
+            return false
+"""
+
+
+
+
 def alternate_hands_check(word, starting_hand, other_hand):
     this_word = word
-    letters = range(0,len(word))
+    letter_range = range(0,len(word))
     odds = []
     evens = []
 
-    for letter_index in letters:
+    for letter_index in letter_range:
         if letter_index % 2 != 0:
             odds.append(this_word[letter_index])
 
         elif letter_index % 2 == 0:
             evens.append(this_word[letter_index])
 
-    test = all(x in starting_hand for x in evens)
-    test2 = all(y in other_hand for y in odds)
 
-    if not all(x in starting_hand for x in evens) or not all(y in other_hand for y in odds):
+    all_evens = all(x in starting_hand for x in evens)
+    all_odds = all(y in other_hand for y in odds)
+
+    if not all_evens or not all_odds:
         # print("{} is NOT a matching word!".format(this_word))
         pass
 
-    elif all(x in starting_hand for x in evens) and all(y in other_hand for y in odds):
+    elif all_evens and all_odds:
         matching_words.append(this_word)
 
     else:
