@@ -1,12 +1,13 @@
 # Find all words in a list that are typed using alternating hands on a QWERTY keyboard
 from english_words import get_english_words_set
+
 web2lowerset = get_english_words_set(['web2'], alpha=True, lower=True)
 wordlist = list(web2lowerset)
 
 # TODO: lefthand, righthand values to sets or dicts
 # TODO: Selectable/configurable keyboard layouts
-lefthand = set("q", "a", "z", "w", "s", "x", "e", "d", "c", "r", "f", "v", "t", "g", "b")
-righthand = set("y", "h", "n", "u", "j", "m", "i", "k", "o", "l", "p")
+lefthand = {"q", "a", "z", "w", "s", "x", "e", "d", "c", "r", "f", "v", "t", "g", "b"}
+righthand = {"y", "h", "n", "u", "j", "m", "i", "k", "o", "l", "p"}
 
 final_length = 5                    # TODO: configurable
 sentence = []                       # final string of words
@@ -50,7 +51,9 @@ while cur_sentence_length < final_length:
     else:
         print("What the fuck did you do??")
 
-print(sentence)
+final_string = ''.join(sentence)
+
+print(final_string)
 # TODO: concatenate together correcthorse style
 # ''.join(listString)
 
