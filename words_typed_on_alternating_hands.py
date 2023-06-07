@@ -1,16 +1,61 @@
 # Find all words in a list that are typed using alternating hands on a QWERTY keyboard
 from english_words import get_english_words_set
+import random
 
 web2lowerset = get_english_words_set(['web2'], alpha=True, lower=True)
 wordlist = list(web2lowerset)
 
-# TODO: lefthand, righthand values to sets or dicts
+
+# TODO: Create configuration options for word selection: word length min/max, include/exclude string, ?
+# TODO: Create configuration options for list: Length, ?
+# TODO: Logic to concatenate strings of words with option(default?) to alternate each word's first letter (LH v RH)
+# TODO: Sliding scale for semantic relation strength to previous word? (Datamuse API)
+
+
+# CONFIG: LAYOUT
 # TODO: Selectable/configurable keyboard layouts
 lefthand = {"q", "a", "z", "w", "s", "x", "e", "d", "c", "r", "f", "v", "t", "g", "b"}
 righthand = {"y", "h", "n", "u", "j", "m", "i", "k", "o", "l", "p"}
 
+# CONFIG: CASE
+case = "PascalCase"                 # TODO: configurable
+
+def apply_case(word, case):
+    match case:
+        case "lower":
+            cased_word = word.lower()
+            return cased_word
+        case "UPPER":
+            cased_word = word.upper()
+            return cased_word
+        case "PascalCase":
+            cased_word = word.capitalize()
+            return cased_word
+        case "Swapped":
+            cased_word = word.swapcase()
+            return cased_word
+        case "sPoNgEbOb":
+            # TODO: per-word or to the entire final one
+            cased_word = []
+            spongebob_list = []
+            for n in word:
+                spongebob_list.append(n.upper() if word.index(n) % 2 == 0 else n.lower())   # TODO: reversible
+            cased_word = ''.join(spongebob_list)
+            return cased_word
+        case "RanDoM":
+            cased_word = []
+            random_list = []
+            for n in word:
+                rand = random.randrange(0, 10, 1)
+                random_list.append(n.upper() if rand > 5 else n.lower())
+            cased_word = ''.join(random_list)
+            return cased_word
+
+# CONFIG: FINAL STRING
 final_length = 5                    # TODO: configurable
 sentence = []                       # final string of words
+
+
 cur_sentence_length = 0
 i = 0
 
@@ -46,7 +91,7 @@ while cur_sentence_length < final_length:
         # print("{} is NOT a matching word!".format(this_word))
         pass
     elif all_evens and all_odds:
-        sentence.append(this_word)
+        sentence.append(apply_case(this_word, case))
         cur_sentence_length += 1
     else:
         print("What the fuck did you do??")
@@ -54,13 +99,5 @@ while cur_sentence_length < final_length:
 final_string = ''.join(sentence)
 
 print(final_string)
-# TODO: concatenate together correcthorse style
-# ''.join(listString)
-
-# TODO: Create configuration options for word selection: word length min/max, include/exclude string, ?
-# TODO: Create configuration options for list: Length, ?
-# TODO: Logic to concatenate strings of words with option(default?) to alternate each word's first letter (LH v RH)
-# TODO: Logic for various cases: lower, upper, random, alternating every X, pascal, ...
-# TODO: Sliding scale for semantic relation strength to previous word? (Datamuse API)
 
 # _dict_.keys()
